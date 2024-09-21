@@ -1,4 +1,7 @@
-import { ReactElement } from "react";
+import BlankLayout from "@/layouts/BlankLayout";
+import DefaultLayout from "@/layouts/DefaultLayout";
+import React, { ReactElement } from "react";
+
 import { createBrowserRouter } from "react-router-dom";
 const GLOB_ROUTES:Record<any, any> = import.meta.glob('@/pages/**/*.tsx', { 
     eager: true,
@@ -10,10 +13,22 @@ const RawRoutes:Record<any, any|React.FC|ReactElement>[] = Object.keys(GLOB_ROUT
       .replace(/\[\.{3}.+\]/, '*')
       .replace(/\[(.+)\]/, ':$1');
 
-    return { 
+    const PAGE:React.FC = GLOB_ROUTES[route].default;
+    let LAYOUT:React.FC;
+
+    switch ((PAGE as any).meta?.layout?.toLowerCase()) {
+        case 'blank':
+            LAYOUT = BlankLayout as any;
+            break;
+        case 'default':
+        default:
+            LAYOUT = DefaultLayout as any;
+    }
+
+    return ({ 
         path: path,
-        lazy: () => ({ Component: GLOB_ROUTES[route].default })
-    };
+        element: React.createElement(LAYOUT, {}, React.createElement(GLOB_ROUTES[route].default, {}, null))
+    });
 });
 
 const AppRoutes:Record<any, any|React.FC|ReactElement>[] = createBrowserRouter(RawRoutes as Record<any, any|React.FC|ReactElement>[]) as any;
