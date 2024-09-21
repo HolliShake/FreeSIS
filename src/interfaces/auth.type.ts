@@ -1,4 +1,4 @@
-export type AuthType = {
+export interface IAuthType {
     email: string;
     password: string;
 }

@@ -1,8 +1,8 @@
-import { Button, Card, CardBody, CardHeader, Checkbox, Heading, IconButton, Input, InputGroup, InputRightAddon, Text } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardHeader, Checkbox, Heading, Input, InputGroup, InputRightAddon, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AuthType } from "@interfaces/auth.type";
+import { IAuthType } from "@interfaces/auth.type";
 import React, { useTransition } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
@@ -23,11 +23,10 @@ const LoginPage = () => {
         },
     });
     
-    const onLogin = (data:AuthType) => {
-        console.log("Yeah!!")
-        startTransition(async () => {
-            console.log(data);
-        });
+    const onLogin = (formData:IAuthType) => {
+        // startTransition(async () => {
+        //     Acade
+        // });
     };
 
     return (
